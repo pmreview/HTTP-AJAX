@@ -25,6 +25,7 @@ const FriendFrom = props => {
 
                 <button type="submit">Add Friend</button>
                 <button type="button" onClick={props.updateFriend}>Update</button>
+                <button type="button" onClick={props.deleteFriend}>Delete</button>
             </form>
         </div>
     )

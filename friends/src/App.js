@@ -3,8 +3,6 @@ import './App.css';
 
 import axios from 'axios';
 
-
-
 import List from './components/List/List';
 import FriendForm from './components/FriendForm/FriendForm'
 
@@ -87,6 +85,20 @@ class App extends React.Component {
     })
   }
 
+  deleteFriend = e => {
+    e.preventDefault();
+
+    let updatedFriends = [...this.state.friends]
+    console.log("early updated friends here", updatedFriends)
+    const index = this.state.friends.findIndex(friend => friend.id === this.state.id);
+    console.log("index here", index)
+    updatedFriends.splice([index], 1)
+    console.log("updated here", updatedFriends)
+    this.setState({
+      friends: updatedFriends
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -105,6 +117,7 @@ class App extends React.Component {
           age={this.state.age}
           email={this.state.email}
           updateFriend={this.updateFriend}
+          deleteFriend={this.deleteFriend}
         />
       </div>
     )
