@@ -22,7 +22,6 @@ class App extends React.Component {
     axios
       .get('http://localhost:5000/friends')
       .then(res => {
-        console.log(res);
         this.setState({ friends: res.data });
       })
       .catch(err => {
@@ -78,7 +77,6 @@ class App extends React.Component {
 
     const updatedFriends = [...this.state.friends]
     const index = this.state.friends.findIndex(friend => friend.id === this.state.id);
-    console.log("index here", index)
     updatedFriends[index] = friendData;
     this.setState({
       friends: updatedFriends
@@ -89,11 +87,8 @@ class App extends React.Component {
     e.preventDefault();
 
     let updatedFriends = [...this.state.friends]
-    console.log("early updated friends here", updatedFriends)
     const index = this.state.friends.findIndex(friend => friend.id === this.state.id);
-    console.log("index here", index)
     updatedFriends.splice([index], 1)
-    console.log("updated here", updatedFriends)
     this.setState({
       friends: updatedFriends
     })
