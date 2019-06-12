@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import axios from 'axios';
-import { Agent } from 'https';
+
 
 
 import List from './components/List/List';
@@ -13,8 +13,9 @@ class App extends React.Component {
     super();
     this.state = {
       friends: [],
+      id: "",
       name: "",
-      age: null,
+      age: "",
       email: "",
     };
   }
@@ -35,6 +36,7 @@ class App extends React.Component {
     e.preventDefault();
 
     const newFriend = {
+      id: this.state.friends.length + 1,
       name: this.state.name,
       age: this.state.age,
       email: this.state.email
@@ -42,8 +44,9 @@ class App extends React.Component {
 
     this.setState({
       friends: [...this.state.friends, newFriend],
+      id: "",
       name: "",
-      age: null,
+      age: "",
       email: "",
     })
   }
@@ -55,11 +58,44 @@ class App extends React.Component {
     })
   }
 
+  selectFriend = id => {
+    const getFriend = this.state.friends.filter(friend => friend.id === id)[0];
+    this.setState({
+      id: getFriend.id,
+      name: getFriend.name,
+      age: getFriend.age,
+      email: getFriend.email,
+    })
+  }
+
+  updateFriend = e => {
+    e.preventDefault();
+
+    const friendData = {
+      id: this.state.id,
+      name: this.state.name,
+      age: this.state.age,
+      email: this.state.email,
+    }
+
+    const updatedFriends = [...this.state.friends]
+    const index = this.state.friends.findIndex(friend => friend.id === this.state.id);
+    console.log("index here", index)
+    updatedFriends[index] = friendData;
+    this.setState({
+      friends: updatedFriends
+    })
+  }
+
   render() {
     return (
       <div className="App">
         {this.state.friends.map(friend => {
-          return <List key={friend.id} friend={friend}/>
+          return <List
+                    key={friend.id}
+                    friend={friend}
+                    selectFriend={this.selectFriend}
+                  />
         })}
 
         <FriendForm
@@ -68,6 +104,7 @@ class App extends React.Component {
           name={this.state.name}
           age={this.state.age}
           email={this.state.email}
+          updateFriend={this.updateFriend}
         />
       </div>
     )
